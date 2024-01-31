@@ -1,7 +1,6 @@
 ### IZZ STORE AUTOSCRIPT
 
-CONTACT FOR ORDERS : https://t.me/YinnVpn
-
+CONTACT FOR ORDERS : https://t.me/IZZCOY
 
 ### UPDATE TERLEBIH DAHULU
 <pre><code>apt update && apt upgrade -y</code></pre>
