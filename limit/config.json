@@ -43,6 +43,7 @@
                {
                  "id": "1d1c1d94-6987-4658-a4dc-8821a30fe7e0"
 #vless
+},{"id": "vl","email": "vl"
              }
           ]
        },
@@ -63,6 +64,7 @@
                  "id": "1d1c1d94-6987-4658-a4dc-8821a30fe7e0",
                  "alterId": 0
 #vmess
+},{"id": "vm","email": "vm"
              }
           ]
        },
@@ -83,6 +85,7 @@
               {
                  "password": "1d1c1d94-6987-4658-a4dc-8821a30fe7e0"
 #trojanws
+},{"id": "tr","email": "tr"
               }
           ],
          "udp": true
